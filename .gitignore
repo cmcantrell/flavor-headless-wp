@@ -1,0 +1,28 @@
+# Local dev stack
+_docker/
+
+# WordPress core — exclude everything, then include custom plugin/theme
+app/*
+!app/wp-content/
+app/wp-content/*
+!app/wp-content/plugins/
+!app/wp-content/themes/
+app/wp-content/plugins/*
+app/wp-content/themes/*
+!app/wp-content/plugins/headless-core/
+!app/wp-content/themes/headless-theme/
+
+# Server configs
+deploy/
+
+# Dependencies (belt-and-suspenders with headless/.gitignore)
+node_modules/
+
+# Build output
+dist/
+
+# OS
+.DS_Store
+
+# Claude Code
+.claude/

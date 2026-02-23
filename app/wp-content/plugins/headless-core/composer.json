@@ -1,0 +1,11 @@
+{
+  "name": "flavor/headless-core",
+  "description": "Core functionality for headless WordPress — settings, GraphQL extensions, preview support, and ISR revalidation.",
+  "type": "wordpress-plugin",
+  "license": "GPL-2.0-or-later",
+  "require": {
+    "php": ">=8.0",
+    "wp-graphql/wp-graphql": "^1.0",
+    "axewp/wp-graphql-headless-login": "^0.4"
+  }
+}
