@@ -78,7 +78,7 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   output: "standalone",
-  transpilePackages: ["@flavor/core"],
+  transpilePackages: ["@flavor/core", "@flavor/woo"],
   outputFileTracingRoot: resolve(join(__dirname, "../../")),
   images: {
     remotePatterns: buildRemotePatterns(),

@@ -5,7 +5,9 @@
     "paths": {
       "@/*": ["./src/*"],
       "@flavor/core": ["../../packages/core/src/index.ts"],
-      "@flavor/core/*": ["../../packages/core/src/*"]
+      "@flavor/core/*": ["../../packages/core/src/*"],
+      "@flavor/woo": ["../../packages/woo/src/index.ts"],
+      "@flavor/woo/*": ["../../packages/woo/src/*"]
     }
   },
   "include": [

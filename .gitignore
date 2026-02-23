@@ -10,6 +10,7 @@ app/wp-content/*
 app/wp-content/plugins/*
 app/wp-content/themes/*
 !app/wp-content/plugins/headless-core/
+!app/wp-content/plugins/headless-woo/
 !app/wp-content/themes/headless-theme/
 
 # Server configs

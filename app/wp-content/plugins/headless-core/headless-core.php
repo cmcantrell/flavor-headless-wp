@@ -6,7 +6,7 @@
  * Author: InsightDesigns
  * Requires at least: 6.5
  * Requires PHP: 8.0
- * Requires Plugins: wp-graphql, headless-login-for-wpgraphql
+ * Requires Plugins: wp-graphql, wp-graphql-headless-login
  * Text Domain: headless-core
  */
 

@@ -1,0 +1,12 @@
+{
+  "name": "flavor/headless-woo",
+  "description": "WooCommerce integration for headless WordPress — theme support and ISR revalidation for products.",
+  "type": "wordpress-plugin",
+  "license": "GPL-2.0-or-later",
+  "require": {
+    "php": ">=8.0",
+    "flavor/headless-core": "*",
+    "woocommerce/woocommerce": ">=8.0",
+    "wp-graphql/wp-graphql-woocommerce": ">=0.12"
+  }
+}

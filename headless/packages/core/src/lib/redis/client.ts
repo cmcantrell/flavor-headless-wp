@@ -99,6 +99,13 @@ export const CACHE_TTL: Record<string, number> = {
   // Comments (30s — fresher than posts)
   GetCommentsByPost: 30,
 
+  // WooCommerce products (2 min listings, 1 min single)
+  GetProducts: 120,
+  GetProductsByCategory: 120,
+  GetProductBySlug: 60,
+  GetProductCategoryBySlug: 60,
+  GetProductCategories: 300,
+
   default: 60,
 };
 

@@ -17,6 +17,9 @@ importers:
       '@flavor/core':
         specifier: workspace:*
         version: link:../../packages/core
+      '@flavor/woo':
+        specifier: workspace:*
+        version: link:../../packages/woo
       next:
         specifier: ^16.1.6
         version: 16.1.6(@babel/core@7.29.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -60,6 +63,37 @@ importers:
       ioredis:
         specifier: ^5.9.2
         version: 5.9.3
+      swr:
+        specifier: ^2.4.0
+        version: 2.4.0(react@19.2.4)
+    devDependencies:
+      '@types/node':
+        specifier: ^20
+        version: 20.19.33
+      '@types/react':
+        specifier: ^19
+        version: 19.2.14
+      '@types/react-dom':
+        specifier: ^19
+        version: 19.2.3(@types/react@19.2.14)
+      next:
+        specifier: ^16.1.6
+        version: 16.1.6(@babel/core@7.29.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      react:
+        specifier: ^19.2.3
+        version: 19.2.4
+      react-dom:
+        specifier: ^19.2.3
+        version: 19.2.4(react@19.2.4)
+      typescript:
+        specifier: ^5
+        version: 5.9.3
+
+  packages/woo:
+    dependencies:
+      '@flavor/core':
+        specifier: workspace:*
+        version: link:../core
       swr:
         specifier: ^2.4.0
         version: 2.4.0(react@19.2.4)
