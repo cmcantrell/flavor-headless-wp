@@ -3,8 +3,9 @@ RUN corepack enable
 WORKDIR /app
 
 # Copy workspace config and all package.json files
-COPY pnpm-workspace.yaml pnpm-lock.yaml package.json tsconfig.base.json ./
+COPY pnpm-workspace.yaml pnpm-lock.yaml package.json tsconfig.base.json turbo.json ./
 COPY packages/core/package.json ./packages/core/
+COPY packages/woo/package.json ./packages/woo/
 COPY apps/web/package.json ./apps/web/
 
 RUN pnpm install --frozen-lockfile
@@ -15,6 +16,7 @@ WORKDIR /app
 
 COPY --from=deps /app ./
 COPY packages/core ./packages/core
+COPY packages/woo ./packages/woo
 COPY apps/web ./apps/web
 
 ARG NEXT_PUBLIC_WORDPRESS_URL

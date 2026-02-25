@@ -80,6 +80,11 @@ const CHECKOUT_CART_FIELDS = `
         methodId
       }
     }
+    appliedCoupons {
+      code
+      discountAmount
+    }
+    discountTotal
   }
   ${CART_ITEM_FIELDS}
 `;

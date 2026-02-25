@@ -18,6 +18,7 @@ export function AddToCartButton({
 }: AddToCartButtonProps) {
   const { addToCart, isAdding } = useCart();
   const [quantity, setQuantity] = useState(1);
+  const [error, setError] = useState<string | null>(null);
 
   const outOfStock = stockStatus === "OUT_OF_STOCK";
   const needsVariation = variationRequired && !variationId;
@@ -33,8 +34,13 @@ export function AddToCartButton({
 
   async function handleAdd() {
     if (disabled) return;
-    await addToCart(productId, quantity, variationId);
-    setQuantity(1);
+    setError(null);
+    try {
+      await addToCart(productId, quantity, variationId);
+      setQuantity(1);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Could not add to cart.");
+    }
   }
 
   return (
@@ -72,6 +78,12 @@ export function AddToCartButton({
       >
         {label}
       </button>
+
+      {error && (
+        <p role="alert" className="text-sm text-red-600 mt-2">
+          {error}
+        </p>
+      )}
     </div>
   );
 }

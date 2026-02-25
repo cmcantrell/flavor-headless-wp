@@ -27,6 +27,9 @@ export type {
   CustomerAddressInput,
   CheckoutInput,
   CheckoutResponse,
+  AppliedCoupon,
+  ApplyCouponResponse,
+  RemoveCouponsResponse,
   UpdateShippingMethodResponse,
   PaymentGateway,
   PaymentGatewaysResponse,
@@ -54,6 +57,8 @@ export {
   ADD_TO_CART,
   UPDATE_CART_ITEM_QUANTITIES,
   REMOVE_CART_ITEMS,
+  APPLY_COUPON,
+  REMOVE_COUPONS,
 } from "./lib/queries/cart";
 
 export {
@@ -91,6 +96,7 @@ export { ReviewSection } from "./components/review/ReviewSection";
 export { CartProvider, useCart } from "./context/CartContext";
 export { AddToCartButton } from "./components/cart/AddToCartButton";
 export { CartDrawer } from "./components/cart/CartDrawer";
+export { CouponForm } from "./components/cart/CouponForm";
 export { CartIcon } from "./components/cart/CartIcon";
 
 // Shared

@@ -176,6 +176,11 @@ export interface WriteReviewResponse {
 // Cart / Checkout
 // ---------------------------------------------------------------------------
 
+export interface AppliedCoupon {
+  code: string;
+  discountAmount: string;
+}
+
 export interface CartItem {
   key: string;
   quantity: number;
@@ -211,6 +216,8 @@ export interface Cart {
   availableShippingMethods: ShippingPackage[];
   chosenShippingMethods: string[];
   shippingTotal: string;
+  appliedCoupons: AppliedCoupon[];
+  discountTotal: string;
 }
 
 export interface GetCartResponse {
@@ -233,6 +240,14 @@ export interface RemoveCartItemsResponse {
   removeItemsFromCart: {
     cart: Cart;
   };
+}
+
+export interface ApplyCouponResponse {
+  applyCoupon: { cart: Cart };
+}
+
+export interface RemoveCouponsResponse {
+  removeCoupons: { cart: Cart };
 }
 
 // ---------------------------------------------------------------------------

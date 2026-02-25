@@ -75,6 +75,23 @@ export function OrderSummary({ cart }: OrderSummaryProps) {
           </div>
         )}
 
+        {cart.discountTotal && cart.discountTotal !== "$0.00" && (
+          <div className="flex justify-between text-sm">
+            <span className="text-green-600">
+              Discount
+              {cart.appliedCoupons?.length > 0 && (
+                <span className="ml-1">
+                  ({cart.appliedCoupons.map((c) => c.code.toUpperCase()).join(", ")})
+                </span>
+              )}
+            </span>
+            <span
+              className="font-medium text-green-600"
+              dangerouslySetInnerHTML={{ __html: `-${cart.discountTotal}` }}
+            />
+          </div>
+        )}
+
         <div className="flex justify-between text-base font-semibold border-t border-gray-200 pt-2">
           <span className="text-gray-900">Total</span>
           <span

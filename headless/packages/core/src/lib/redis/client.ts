@@ -122,6 +122,8 @@ export const NEVER_CACHE = new Set([
   "UpdateShippingMethod",
   "Checkout",
   "GetOrder",
+  "ApplyCoupon",
+  "RemoveCoupons",
   // Customer
   "GetCustomerAddresses",
   "UpdateCustomerAddresses",

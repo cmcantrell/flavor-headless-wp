@@ -9,7 +9,7 @@ import {
 } from "react";
 import useSWR from "swr";
 import { graphqlFetcher, volatileSWRConfig } from "@flavor/core/lib/swr";
-import { GET_CART, ADD_TO_CART, UPDATE_CART_ITEM_QUANTITIES, REMOVE_CART_ITEMS } from "../lib/queries/cart";
+import { GET_CART, ADD_TO_CART, UPDATE_CART_ITEM_QUANTITIES, REMOVE_CART_ITEMS, APPLY_COUPON, REMOVE_COUPONS } from "../lib/queries/cart";
 import { UPDATE_SHIPPING_METHOD, CHECKOUT } from "../lib/queries/checkout";
 import type {
   Cart,
@@ -18,6 +18,8 @@ import type {
   UpdateCartItemsResponse,
   RemoveCartItemsResponse,
   UpdateShippingMethodResponse,
+  ApplyCouponResponse,
+  RemoveCouponsResponse,
   CheckoutInput,
   CheckoutResponse,
   Order,
@@ -36,6 +38,8 @@ interface CartContextType {
   updateQuantity: (key: string, quantity: number) => Promise<void>;
   removeItem: (key: string) => Promise<void>;
   clearCart: () => Promise<void>;
+  applyCoupon: (code: string) => Promise<void>;
+  removeCoupon: (code: string) => Promise<void>;
   updateShippingMethod: (rateId: string) => Promise<void>;
   checkout: (input: CheckoutInput) => Promise<Order>;
   drawerOpen: boolean;
@@ -53,6 +57,8 @@ const CartContext = createContext<CartContextType>({
   updateQuantity: async () => {},
   removeItem: async () => {},
   clearCart: async () => {},
+  applyCoupon: async () => {},
+  removeCoupon: async () => {},
   updateShippingMethod: async () => {},
   checkout: async () => { throw new Error("CartProvider not mounted"); },
   drawerOpen: false,
@@ -148,6 +154,28 @@ export function CartProvider({ children }: { children: ReactNode }) {
     [cart, mutate],
   );
 
+  const applyCoupon = useCallback(
+    async (code: string) => {
+      const result = await graphqlFetcher<ApplyCouponResponse>([
+        APPLY_COUPON,
+        { code },
+      ]);
+      await mutate({ cart: result.applyCoupon.cart }, { revalidate: false });
+    },
+    [mutate],
+  );
+
+  const removeCoupon = useCallback(
+    async (code: string) => {
+      const result = await graphqlFetcher<RemoveCouponsResponse>([
+        REMOVE_COUPONS,
+        { codes: [code] },
+      ]);
+      await mutate({ cart: result.removeCoupons.cart }, { revalidate: false });
+    },
+    [mutate],
+  );
+
   const updateShippingMethod = useCallback(
     async (rateId: string) => {
       const result = await graphqlFetcher<UpdateShippingMethodResponse>([
@@ -203,6 +231,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
         updateQuantity,
         removeItem,
         clearCart,
+        applyCoupon,
+        removeCoupon,
         updateShippingMethod,
         checkout: checkoutOrder,
         drawerOpen,

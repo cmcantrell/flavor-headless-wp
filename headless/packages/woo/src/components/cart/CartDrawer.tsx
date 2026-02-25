@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useCart } from "../../context/CartContext";
+import { CouponForm } from "./CouponForm";
 
 export function CartDrawer() {
   const {
@@ -190,6 +191,8 @@ export function CartDrawer() {
         {/* Footer */}
         {items.length > 0 && (
           <div className="border-t border-gray-200 px-4 py-4 space-y-3">
+            <CouponForm />
+
             <div className="flex justify-between text-sm">
               <span className="text-gray-600">Subtotal</span>
               <span
@@ -197,6 +200,17 @@ export function CartDrawer() {
                 dangerouslySetInnerHTML={{ __html: cart?.subtotal ?? "" }}
               />
             </div>
+
+            {cart?.discountTotal && cart.discountTotal !== "$0.00" && (
+              <div className="flex justify-between text-sm">
+                <span className="text-green-600">Discount</span>
+                <span
+                  className="font-medium text-green-600"
+                  dangerouslySetInnerHTML={{ __html: `-${cart.discountTotal}` }}
+                />
+              </div>
+            )}
+
             <div className="flex justify-between text-base font-semibold">
               <span className="text-gray-900">Total</span>
               <span

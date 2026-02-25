@@ -7,6 +7,7 @@ import { graphqlFetcher, volatileSWRConfig } from "@flavor/core/lib/swr";
 import { useAuth } from "@flavor/core/context/AuthContext";
 import { useCart } from "../../context/CartContext";
 import { OrderSummary } from "./OrderSummary";
+import { CouponForm } from "../cart/CouponForm";
 import { GET_CHECKOUT_CART } from "../../lib/queries/checkout";
 import {
   GET_CUSTOMER_ADDRESSES,
@@ -349,6 +350,7 @@ export function CheckoutForm() {
         {/* Right column — order summary + place order */}
         <div className="lg:col-span-1">
           <div className="sticky top-4 space-y-6 bg-gray-50 p-6 rounded-lg">
+            <CouponForm />
             <OrderSummary cart={cart} />
 
             {error && (

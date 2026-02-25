@@ -71,6 +71,11 @@ const CART_CONTENT_FIELDS = `
     needsShippingAddress
     shippingTotal
     chosenShippingMethods
+    appliedCoupons {
+      code
+      discountAmount
+    }
+    discountTotal
   }
   ${CART_ITEM_FIELDS}
 `;
@@ -117,6 +122,28 @@ export const UPDATE_CART_ITEM_QUANTITIES = `
 export const REMOVE_CART_ITEMS = `
   mutation RemoveCartItems($keys: [ID]!) {
     removeItemsFromCart(input: { keys: $keys }) {
+      cart {
+        ...CartContentFields
+      }
+    }
+  }
+  ${CART_CONTENT_FIELDS}
+`;
+
+export const APPLY_COUPON = `
+  mutation ApplyCoupon($code: String!) {
+    applyCoupon(input: { code: $code }) {
+      cart {
+        ...CartContentFields
+      }
+    }
+  }
+  ${CART_CONTENT_FIELDS}
+`;
+
+export const REMOVE_COUPONS = `
+  mutation RemoveCoupons($codes: [String!]) {
+    removeCoupons(input: { codes: $codes }) {
       cart {
         ...CartContentFields
       }
