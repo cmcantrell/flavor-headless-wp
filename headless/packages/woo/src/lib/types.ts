@@ -83,6 +83,7 @@ export interface ProductCard {
 export interface Product extends ProductCard {
   description?: string;
   sku?: string;
+  reviewsAllowed?: boolean;
   galleryImages?: {
     nodes: WPImage[];
   };
@@ -93,6 +94,12 @@ export interface Product extends ProductCard {
     nodes: ProductVariation[];
   };
   related?: {
+    nodes: ProductCard[];
+  };
+  upsell?: {
+    nodes: ProductCard[];
+  };
+  crossSell?: {
     nodes: ProductCard[];
   };
   productTags?: {
@@ -126,7 +133,47 @@ export interface ProductCategoriesResponse {
 }
 
 // ---------------------------------------------------------------------------
-// Cart / Checkout stubs (Phase 2+)
+// Reviews
+// ---------------------------------------------------------------------------
+
+export interface ProductReview {
+  rating: number;
+  node: {
+    id: string;
+    databaseId: number;
+    content: string;
+    date: string;
+    author: {
+      node: {
+        name: string;
+        avatar?: {
+          url: string;
+        };
+      };
+    };
+  };
+}
+
+export interface ProductReviewsResponse {
+  product: {
+    reviewCount: number;
+    reviewsAllowed: boolean;
+    reviews: {
+      averageRating: number;
+      edges: ProductReview[];
+    };
+  } | null;
+}
+
+export interface WriteReviewResponse {
+  writeReview: {
+    rating: number;
+    clientMutationId: string | null;
+  };
+}
+
+// ---------------------------------------------------------------------------
+// Cart / Checkout
 // ---------------------------------------------------------------------------
 
 export interface CartItem {
@@ -141,6 +188,18 @@ export interface CartItem {
   } | null;
 }
 
+export interface ShippingRate {
+  id: string;
+  label: string;
+  cost: string;
+  methodId: string;
+}
+
+export interface ShippingPackage {
+  packageDetails: string;
+  rates: ShippingRate[];
+}
+
 export interface Cart {
   contents: {
     nodes: CartItem[];
@@ -148,7 +207,37 @@ export interface Cart {
   };
   subtotal: string;
   total: string;
+  needsShippingAddress: boolean;
+  availableShippingMethods: ShippingPackage[];
+  chosenShippingMethods: string[];
+  shippingTotal: string;
 }
+
+export interface GetCartResponse {
+  cart: Cart;
+}
+
+export interface AddToCartResponse {
+  addToCart: {
+    cart: Cart;
+  };
+}
+
+export interface UpdateCartItemsResponse {
+  updateItemQuantities: {
+    cart: Cart;
+  };
+}
+
+export interface RemoveCartItemsResponse {
+  removeItemsFromCart: {
+    cart: Cart;
+  };
+}
+
+// ---------------------------------------------------------------------------
+// Order (Phase 2+)
+// ---------------------------------------------------------------------------
 
 export interface Order {
   id: string;
@@ -165,5 +254,70 @@ export interface Order {
         node: ProductCard;
       };
     }[];
+  };
+  billing: {
+    firstName: string;
+    lastName: string;
+    email: string;
+  };
+  shippingTotal?: string;
+  subtotal?: string;
+}
+
+// ---------------------------------------------------------------------------
+// Payment Gateways
+// ---------------------------------------------------------------------------
+
+export interface PaymentGateway {
+  id: string;
+  title: string;
+  description: string;
+  icon: string | null;
+}
+
+export interface PaymentGatewaysResponse {
+  paymentGateways: {
+    nodes: PaymentGateway[];
+  };
+}
+
+// ---------------------------------------------------------------------------
+// Checkout Input Types
+// ---------------------------------------------------------------------------
+
+export interface CustomerAddressInput {
+  firstName: string;
+  lastName: string;
+  email?: string;
+  phone?: string;
+  address1: string;
+  address2?: string;
+  city: string;
+  state: string;
+  postcode: string;
+  country: string;
+  overwrite?: boolean;
+}
+
+export interface CheckoutInput {
+  billing: CustomerAddressInput;
+  shipping?: CustomerAddressInput;
+  paymentMethod: string;
+  shippingMethod?: string[];
+  shipToDifferentAddress?: boolean;
+  customerNote?: string;
+}
+
+export interface CheckoutResponse {
+  checkout: {
+    order: Order;
+    result: string;
+    redirect: string;
+  };
+}
+
+export interface UpdateShippingMethodResponse {
+  updateShippingMethod: {
+    cart: Cart;
   };
 }

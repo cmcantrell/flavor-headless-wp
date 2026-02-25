@@ -113,11 +113,19 @@ export const CACHE_TTL: Record<string, number> = {
  * Operations that should never be cached
  */
 export const NEVER_CACHE = new Set([
-  // Mutations (Phase 2: WooCommerce)
+  // Cart / Checkout (session-specific, never cache)
+  "GetCart",
   "AddToCart",
-  "UpdateCartItems",
+  "UpdateCartItemQuantities",
   "RemoveCartItems",
+  "GetCheckoutCart",
+  "UpdateShippingMethod",
   "Checkout",
+  "GetOrder",
+  // Customer
+  "GetCustomerAddresses",
+  "UpdateCustomerAddresses",
+  // Auth
   "Login",
   "Register",
   // Comments

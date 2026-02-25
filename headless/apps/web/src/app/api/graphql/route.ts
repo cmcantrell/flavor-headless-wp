@@ -38,6 +38,9 @@ export async function POST(request: NextRequest) {
       }
     }
 
+    // WooCommerce session: read from httpOnly cookie
+    const wcSession = request.cookies.get("wc_session")?.value;
+
     const canCache = shouldCache(query, authHeader);
     const redis = canCache ? await getRedisClient() : null;
     const cacheKey = canCache ? generateCacheKey(query, variables) : null;
@@ -79,6 +82,7 @@ export async function POST(request: NextRequest) {
       headers: {
         "Content-Type": "application/json",
         ...(authHeader ? { Authorization: authHeader } : {}),
+        ...(wcSession ? { "woocommerce-session": `Session ${wcSession}` } : {}),
       },
       body: JSON.stringify(body),
     });
@@ -94,9 +98,23 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    return NextResponse.json(data, {
+    const res = NextResponse.json(data, {
       headers: cacheHeaders(redis && cacheKey ? "MISS" : "BYPASS"),
     });
+
+    // Persist WooCommerce session token as httpOnly cookie
+    const newSession = response.headers.get("woocommerce-session");
+    if (newSession) {
+      res.cookies.set("wc_session", newSession, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+        path: "/",
+        maxAge: 60 * 60 * 24 * 14, // 14 days
+      });
+    }
+
+    return res;
   } catch (error) {
     console.error("GraphQL proxy error:", error);
     return NextResponse.json(

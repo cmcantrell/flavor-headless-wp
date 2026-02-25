@@ -73,6 +73,7 @@ export const PRODUCT_FIELDS = `
     slug
     type
     description
+    reviewsAllowed
     image {
       ...ImageFields
     }
@@ -113,6 +114,16 @@ export const PRODUCT_FIELDS = `
         }
       }
       related(first: 4) {
+        nodes {
+          ...ProductCardFields
+        }
+      }
+      upsell(first: 4) {
+        nodes {
+          ...ProductCardFields
+        }
+      }
+      crossSell(first: 4) {
         nodes {
           ...ProductCardFields
         }
@@ -160,6 +171,16 @@ export const PRODUCT_FIELDS = `
           ...ProductCardFields
         }
       }
+      upsell(first: 4) {
+        nodes {
+          ...ProductCardFields
+        }
+      }
+      crossSell(first: 4) {
+        nodes {
+          ...ProductCardFields
+        }
+      }
     }
     ... on ExternalProduct {
       price
@@ -179,6 +200,11 @@ export const PRODUCT_FIELDS = `
         }
       }
       related(first: 4) {
+        nodes {
+          ...ProductCardFields
+        }
+      }
+      upsell(first: 4) {
         nodes {
           ...ProductCardFields
         }

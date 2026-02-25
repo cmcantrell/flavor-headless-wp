@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import type { ProductCard as ProductCardType } from "../../lib/types";
+import { StarRating } from "../review/StarRating";
 
 interface ProductCardProps {
   product: ProductCardType;
@@ -73,6 +74,16 @@ export function ProductCard({ product }: ProductCardProps) {
             {product.name}
           </Link>
         </h2>
+
+        {product.averageRating !== undefined && product.averageRating > 0 && (
+          <div className="mb-1">
+            <StarRating
+              rating={product.averageRating}
+              size="sm"
+              count={product.reviewCount}
+            />
+          </div>
+        )}
 
         {product.price && (
           <div className="flex items-center gap-2">

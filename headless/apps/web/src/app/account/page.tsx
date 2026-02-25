@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@flavor/core/context/AuthContext";
 import { ProfileForm, PasswordForm } from "@flavor/core/components/account";
+import { AddressForm } from "@flavor/woo";
 
 export default function AccountPage() {
   const { user, loading } = useAuth();
@@ -36,6 +37,11 @@ export default function AccountPage() {
       <section className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8">
         <h2 className="text-xl font-semibold text-gray-900 mb-6">Profile</h2>
         <ProfileForm />
+      </section>
+
+      <section className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8">
+        <h2 className="text-xl font-semibold text-gray-900 mb-6">Addresses</h2>
+        <AddressForm />
       </section>
 
       <section className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">

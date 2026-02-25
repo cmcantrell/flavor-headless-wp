@@ -120,7 +120,7 @@ function NavDropdown({
   );
 }
 
-export function Header() {
+export function Header({ actions }: { actions?: React.ReactNode }) {
   const { settings, primaryMenu, membershipConfig } = useSiteSettings();
   const { user, loading } = useAuth();
   const [authModal, setAuthModal] = useState<{ open: boolean; view: "login" | "register" }>({
@@ -150,6 +150,9 @@ export function Header() {
           <Suspense>
             <SearchForm />
           </Suspense>
+
+          {/* Actions slot (e.g. cart icon) */}
+          {actions}
 
           {/* Auth UI */}
           {!loading && (

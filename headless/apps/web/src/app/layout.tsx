@@ -5,6 +5,7 @@ import { SiteProvider } from "@flavor/core/context/SiteContext";
 import { AuthProvider } from "@flavor/core/context/AuthContext";
 import { Header } from "@flavor/core/components/Header";
 import { Footer } from "@flavor/core/components/Footer";
+import { CartProvider, CartDrawer, CartIcon } from "@flavor/woo";
 import { wpFetch } from "@flavor/core/lib/wordpress/client";
 import { GET_SITE_SETTINGS } from "@flavor/core/lib/wordpress/queries/site";
 import { GET_MENU_BY_LOCATION } from "@flavor/core/lib/wordpress/queries/menus";
@@ -83,15 +84,18 @@ export default async function RootLayout({
         <SWRProvider>
           <SiteProvider settings={settings} readingSettings={readingSettings} discussionConfig={discussionConfig} membershipConfig={membershipConfig} headlessConfig={headlessConfig} primaryMenu={primaryMenu} footerMenu={footerMenu}>
             <AuthProvider>
-              <a
-                href="#main-content"
-                className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:shadow-lg focus:rounded-md"
-              >
-                Skip to main content
-              </a>
-              <Header />
-              <main id="main-content" className="flex-1">{children}</main>
-              <Footer />
+              <CartProvider>
+                <a
+                  href="#main-content"
+                  className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:shadow-lg focus:rounded-md"
+                >
+                  Skip to main content
+                </a>
+                <Header actions={<CartIcon />} />
+                <main id="main-content" className="flex-1">{children}</main>
+                <Footer />
+                <CartDrawer />
+              </CartProvider>
             </AuthProvider>
           </SiteProvider>
         </SWRProvider>
